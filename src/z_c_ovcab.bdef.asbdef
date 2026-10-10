@@ -1,0 +1,34 @@
+projection;
+strict ( 2 );
+use draft;
+
+use side effects;
+
+define behavior for Z_C_OVCAB alias Ordem
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+  use action fornecer;
+
+  field ( readonly ) Totalordem;
+
+  use association _Item { create; }
+}
+
+
+
+
+define behavior for Z_C_OVITEM alias Item
+{
+  use update;
+  use delete;
+
+  use association _Header;
+}

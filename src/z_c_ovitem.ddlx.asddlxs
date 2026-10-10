@@ -1,0 +1,57 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Item da Ordem',
+    typeNamePlural: 'Itens da Ordem',
+    title: { type: #STANDARD, value: 'Itemid' }
+  }
+}
+
+
+annotate entity Z_C_OVITEM with
+{
+
+  @UI.facet: [
+  {
+    id:            'DadosItem',
+    purpose:       #STANDARD,
+    type:          #IDENTIFICATION_REFERENCE,
+    label:         'Detalhes do Item',
+    position:      10
+  }
+  ]
+
+
+  @UI.lineItem:       [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  @EndUserText.label: 'Item'
+  Itemid;
+
+  @UI.lineItem:       [{ position: 20 }]
+  @UI.identification: [{ position: 20 }]
+  @EndUserText.label: 'Material'
+  Material;
+
+  @UI.lineItem:       [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+  @EndUserText.label: 'Descrição'
+  Descricao;
+
+  @UI.lineItem:       [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @EndUserText.label: 'Quantidade'
+  Quantidade;
+
+  @UI.hidden: true
+  Moeda;
+
+  @UI.lineItem:       [{ position: 50 }]
+  @UI.identification: [{ position: 50 }]
+  @EndUserText.label: 'Preço Unitário'
+  Precouni;
+
+  @UI.lineItem:       [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  @EndUserText.label: 'Preço Total'
+  Precotot;
+}

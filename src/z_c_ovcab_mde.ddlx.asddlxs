@@ -1,0 +1,163 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Ordem de Venda',
+    typeNamePlural: 'Ordens de Venda',
+    title: { type: #STANDARD,  value: 'Ordemid' }
+    
+  },
+  presentationVariant: [{
+    sortOrder: [{ by: 'Ordemid', direction: #DESC }], // Tabela iniciará ordenada pelas ordens mais recentes
+    visualizations: [{ type: #AS_LINEITEM }]
+  }]
+}
+
+annotate entity Z_C_OVCAB with
+{
+
+  // --- CABEÇALHO DA OBJECT PAGE (HEADER FACETS) ---
+  @UI.facet: [
+    {
+      id: 'HeaderStatus',
+      purpose: #HEADER,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'StatusDataPoint',
+      position: 10
+    },
+    {
+      id: 'HeaderTotal',
+      purpose: #HEADER,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'TotalDataPoint',
+      position: 20
+    },
+
+    // --- CORPO DA OBJECT PAGE ---
+    {
+      id: 'SecaoResumo',
+      type: #COLLECTION,
+      label: 'Resumo da Ordem',
+      position: 10
+    },
+    {
+      id: 'GrupoGeral',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Dados da Ordem',
+      parentId: 'SecaoResumo',
+      targetQualifier: 'GroupGeral',
+      position: 10
+    },
+    {
+      id: 'GrupoValores',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Valores e Totais',
+      parentId: 'SecaoResumo',
+      targetQualifier: 'GroupValores',
+      position: 20
+    },
+    {
+      id: 'GrupoAuditoria',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Informações de Registro',
+      parentId: 'SecaoResumo',
+      targetQualifier: 'GroupAuditoria',
+      position: 30
+    },
+    {
+      id: 'Itens',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Itens da Ordem',
+      position: 20,
+      targetElement: '_Item'
+    }
+  ]
+
+  // --- DATA POINTS ---
+
+
+
+  // =========================================================================
+  // --- LAYOUT DAS COLUNAS DA TABELA DA PÁGINA PRINCIPAL (LINE ITEM) ---
+  // =========================================================================
+
+  // 1. Nº da Ordem (Primeira Coluna + Ação de Fornecer)
+  @UI.selectionField: [{ position: 10 }]
+  @UI.lineItem: [
+    { position: 10, importance: #HIGH },
+    {
+      type: #FOR_ACTION,
+      dataAction: 'fornecer',
+      label: 'Fornecer',
+      position: 10
+    }
+  ]
+  @UI.fieldGroup: [{ qualifier: 'GroupGeral', position: 10 }]
+  @EndUserText.label: 'Nº Ordem'
+  Ordemid;
+
+  // 2. Cliente
+  @UI.selectionField: [{ position: 20 }]
+  @UI.lineItem: [{ position: 20, importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'GroupGeral', position: 20 }]
+  @EndUserText.label: 'Cliente'
+  Clienteid;
+
+  // 3. Data de Criação
+  @UI.selectionField: [{ position: 30 }]
+  @UI.lineItem: [{ position: 30, importance: #MEDIUM }]
+  @UI.fieldGroup: [{ qualifier: 'GroupAuditoria', position: 10 }]
+  @EndUserText.label: 'Data de Emissão'
+  CriacaoData;
+
+  // 4. Status com Destaque Visual (Criticality Badge)
+  @UI.selectionField: [{ position: 40 }]
+  @UI.lineItem: [{ position: 40, criticality: 'status_criticality', importance: #HIGH }]
+  @EndUserText.label: 'Status'
+    @UI.dataPoint: { qualifier: 'StatusDataPoint', title: 'Status', criticality: 'status_criticality' }
+  status_texto;
+
+  // Código técnico mantido no formulário interno
+  @UI.fieldGroup: [{ qualifier: 'GroupGeral', position: 30, criticality: 'status_criticality' }]
+  @EndUserText.label: 'Status'
+  Status;
+  
+  
+  @UI.hidden: true
+  Moeda;
+  
+  
+  
+
+  // 5. Total dos Itens (Alinhado à Direita via Moeda)
+  @UI.lineItem: [{ position: 50, importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'GroupValores', position: 10 }]
+  @EndUserText.label: 'Total Itens'
+  Totalitens;
+
+  // 6. Frete (Alinhado à Direita via Moeda)
+  @UI.lineItem: [{ position: 60, importance: #LOW }]
+  @UI.fieldGroup: [{ qualifier: 'GroupValores', position: 20 }]
+  @EndUserText.label: 'Frete'
+  Totalfrete;
+
+  // 7. Total da Ordem (Destaque Principal de Valor)
+  @UI.lineItem: [{ position: 70, importance: #HIGH }]
+  @UI.fieldGroup: [{ qualifier: 'GroupValores', position: 30 }]
+  @EndUserText.label: 'Total Ordem'
+    @UI.dataPoint: { qualifier: 'TotalDataPoint', title: 'Valor Total' }
+  Totalordem;
+
+  // Campos do formulário (Object Page)
+  @UI.fieldGroup: [{ qualifier: 'GroupAuditoria', position: 20 }]
+  @EndUserText.label: 'Hora'
+  CriacaoHora;
+
+  @UI.fieldGroup: [{ qualifier: 'GroupAuditoria', position: 30 }]
+  @EndUserText.label: 'Criado Por'
+  CriacaoUsuario;
+
+}

@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition'
+define service ZUI_OV {
+  expose Z_C_OVCAB  as Ordem;
+  expose Z_C_OVITEM as Item;
+}

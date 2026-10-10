@@ -1,0 +1,117 @@
+managed implementation in class zbp_i_ovcab unique;
+strict ( 2 );
+with draft;
+
+define behavior for Z_I_OVCAB alias Ordem
+persistent table zovcab
+draft table zovcab_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+//etag master <field_name>
+
+early numbering
+{
+  create;
+  update;
+  delete;
+
+  draft action Discard;
+  draft action Edit;
+  draft action Resume;
+  draft action Activate;
+  draft determine action Prepare;
+
+
+
+  field ( readonly )
+  Ordemid,
+  status_texto,
+  Totalitens,
+  CriacaoData,
+  CriacaoHora,
+  CriacaoUsuario,
+  Moeda,
+  Status;
+
+
+
+
+
+
+
+  determination determinarDadosCriacao on save { create; }
+
+  determination calcularTotais on modify
+  {
+    create;
+    // O gatilho principal: alterações/criação/exclusão de itens
+
+  }
+
+
+
+
+
+
+  validation validarCliente on save { create; update; }
+
+  action ( features : instance ) fornecer;
+
+  association _Item { create; }
+
+  side effects
+  {
+    action fornecer affects field Status,
+    field status_texto;
+
+
+  }
+
+
+
+
+  mapping for zovcab
+    {
+      Ordemid        = ordemid;
+      Clienteid      = clienteid;
+      Totalfrete     = totalfrete;
+      Totalitens     = totalitens;
+      Totalordem     = totalordem;
+      CriacaoData    = criacao_data;
+      CriacaoHora    = criacao_hora;
+      CriacaoUsuario = criacao_usuario;
+      Status         = status;
+    }
+
+
+}
+
+
+
+
+define behavior for Z_I_OVITEM alias Item
+persistent table zovitem
+draft table zovitem_d
+lock dependent by _Header
+authorization dependent by _Header
+early numbering
+
+{
+  update;
+  delete;
+  field ( readonly ) Ordemid, Itemid, Moeda;
+  association _Header;
+
+  determination calcularPrecoTotal on modify { create; field Quantidade, Precouni; }
+
+determination recalcularTotalOrdem on modify { create; update; delete; field Quantidade, Precouni; }
+
+  side effects
+  {
+    field Quantidade affects field Precotot;
+    field Precouni affects field Precotot;
+  }
+
+
+}
