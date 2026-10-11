@@ -1,3 +1,12 @@
+![SAP S/4HANA](https://img.shields.io/badge/SAP_S%2F4HANA-2023-0A6ED1?logo=sap\&logoColor=white)
+![ABAP RAP](https://img.shields.io/badge/ABAP-RAP-0A6ED1?logo=sap\&logoColor=white)
+![ABAP CDS](https://img.shields.io/badge/ABAP-CDS-0A6ED1?logo=sap\&logoColor=white)
+![OData V4](https://img.shields.io/badge/OData-V4-008000)
+![SAP Fiori Elements](https://img.shields.io/badge/SAP-Fiori_Elements-0A6ED1?logo=sap\&logoColor=white)
+![abapGit](https://img.shields.io/badge/Version_Control-abapGit-orange)
+![GitHub](https://img.shields.io/badge/Repository-GitHub-181717?logo=github\&logoColor=white)
+
+
 # SAP Ordem de Venda RAP
 
 Aplicação empresarial para gerenciamento de **Ordens de Venda**, desenvolvida utilizando o **SAP ABAP RESTful Application Programming Model (RAP)**, **ABAP CDS**, **OData V4** e **SAP Fiori Elements**.
