@@ -341,8 +341,11 @@ O EML permite realizar operações transacionais diretamente sobre as entidades 
 | `ZBP_I_OVCAB`    | Behavior Implementation       |
 | `ZUI_OV`         | Service Definition            |
 | `ZUI_OV_O4`      | OData V4 Service Binding      |
+| `ZOVCAB`         | Persistence Table — Cabeçalho |
+| `ZOVITEM`        | Persistence Table — Item      |
 | `ZOVCAB_D`       | Draft Persistence — Cabeçalho |
 | `ZOVITEM_D`      | Draft Persistence — Item      |
+****
 
 ---
 
